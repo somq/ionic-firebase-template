@@ -24,6 +24,7 @@ export class HomePage {
 
     this.currentUserPhones.subscribe(res => {
       console.log('a', res)
+
       // console.log(res[0].appProfile.path)
 
       // this.currentUserPhones = db.collection(res[0].appProfile.path).valueChanges();
