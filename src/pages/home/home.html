@@ -1,20 +1,54 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+<div *ngIf="authS.user$ | async; then authenticated else guest">
+  <!-- template will replace this div -->
+</div>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<hr>
 
-  <!-- <ul>
-    <li class="text" *ngFor="let item of items | async">
-      {{item.name}}
-    </li>
-  </ul> -->
+<a class="button is-dark" routerLink="/secret">
+  Super Secret Page
+</a>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-</ion-content>
+<a class="button is-info" routerLink="/content">
+  Subscriber Page
+</a>
+
+<!-- User NOT logged in -->
+<ng-template #guest>
+  <h3>Howdy, GUEST</h3>
+  <p>Login to get started...</p>
+
+  <button (click)="authS.emailLogin('dev2@ocp.com', 'ocpdev2')" class="button btn-social btn-google">
+   Connect...
+  </button>
+</ng-template>
+
+<!-- User logged in -->
+<ng-template #authenticated>
+  <div *ngIf="authS.user$ | async as user">
+    <h3>hi, {{ user.name }}</h3>
+    <img src="assets/avatar.svg" width="50px">
+    <p>UID: {{ user.uid }}</p>
+    <p>UIDx: {{ userId }}</p>
+    <button (click)="authS.signOut()" class="button">Logout</button>
+
+    <hr> superadmin:
+    <span class="tag" [class.is-success]="user.roles?.superadmin">
+      {{ user.roles?.superadmin }}
+    </span>
+    <br> admin:
+    <span class="tag" [class.is-success]="user.roles?.admin">
+      {{ user.roles?.admin }}
+    </span>
+    <br> user:
+    <span class="tag" [class.is-success]="user.roles?.user">
+      {{ user.roles?.user }}
+    </span>
+    <br> phone:
+    <span class="tag" [class.is-success]="user.roles?.phone">
+      {{ user.roles?.phone }}
+    </span>
+    <br>
+  </div>
+</ng-template>
+
+<hr>
