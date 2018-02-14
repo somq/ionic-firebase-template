@@ -10,3 +10,8 @@ export interface User {
     email: string;
     roles: Roles;
 }
+
+export interface Userx {
+    email: string;
+    password: string;
+  }

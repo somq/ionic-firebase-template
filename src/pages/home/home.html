@@ -1,23 +1,54 @@
-<div *ngIf="authS.user$ | async; then authenticated else guest">
+<ion-content text-center>
+
+  <div *ngIf="authS.user$ | async; then authenticated else guest">
   <!-- template will replace this div -->
 </div>
 
 <hr>
 
-<a class="button is-dark" routerLink="/secret">
-  Super Secret Page
-</a>
+<ion-card>
+  
+    <ion-list>
+      <ion-list-header>
+        Superadmin
+      </ion-list-header>
 
-<a class="button is-info" routerLink="/content">
-  Subscriber Page
-</a>
+      <ion-item>
+        <ion-label>User name</ion-label>
+        <ion-input type="username" value="superadmin" [(ngModel)]="userName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input type="text" value="superadmin" [(ngModel)]="userPassword"></ion-input>
+      </ion-item>
+
+      <button ion-item (tap)="authS.addUser(userName)">
+        <ion-icon name="cart" item-start></ion-icon>
+        addUser
+      </button>
+      <ion-list-header>
+          Admin
+        </ion-list-header>
+      <button ion-item (tap)="authS.addPhone()">
+        <ion-icon name="medical" item-start></ion-icon>
+        addPhone
+      </button>
+  
+      <button ion-item (tap)="authS.addAppProfile()">
+        <ion-icon name="cafe" item-start></ion-icon>
+        addprofile
+      </button>
+  
+    </ion-list>
+  </ion-card>
+
 
 <!-- User NOT logged in -->
 <ng-template #guest>
   <h3>Howdy, GUEST</h3>
   <p>Login to get started...</p>
 
-  <button (click)="authS.emailLogin('dev2@ocp.com', 'ocpdev2')" class="button btn-social btn-google">
+  <button (click)="authS.emailLogin('superadmin@ocp.com', 'superadminpw')" class="button btn-social btn-google">
    Connect...
   </button>
 </ng-template>
@@ -51,4 +82,4 @@
   </div>
 </ng-template>
 
-<hr>
+</ion-content>

@@ -21,6 +21,8 @@ export class HomePage {
   userRef;
   ref$;
   user;
+  userName;
+  userPassword;
 
   constructor(
     private db: AngularFirestore,
@@ -30,11 +32,18 @@ export class HomePage {
 
     this.authS.user$.subscribe(user => {
       this.user = user;
-      this.createUser();
+      console.log(user)
+      if(user) {
+        this.createUser();
+      }
     })
     
-    this.afAuth.authState.subscribe(res => {
-      this.userId = res.uid;
+    this.afAuth.authState.subscribe(user => {
+      if(user) {
+        this.userId = user.uid;
+      } else {
+        console.info('User logged out.')
+      }
     })
 
 
@@ -62,35 +71,33 @@ export class HomePage {
 
   }
 
+
   createUser() {
     const user = {
-      uid: 'F3noikGH9PdNRgIsWevqUthScfz2',
-      location: 'italy',
-      name: 'Mondialpol',
+      uid: this.userId,
+      location: 'France',
+      name: 'Oberthur Cash Protection',
       roles: {
-        admin:true,
+        admin:false,
         phone: false,
-        superadmin: false,
+        superadmin: true,
         user: false
       }
     }
 
     this.userCollection = this.db.collection('users')
     // const id = this.db.createId();
-    const id = this.userId;
-    console.log('id', id)
-    const item = { id, user };
-    this.userCollection.add(item);
+    this.userCollection.doc(this.userId).set(user)
   }
 
 
   editPost() {
-    this.postRef.update({ title: 'Edited Title!'})
+    // this.postRef.update({ title: 'Edited Title!'})
   }
 
 
   deletePost() {
-    this.postRef.delete()
+    // this.postRef.delete()
   }
 
 
