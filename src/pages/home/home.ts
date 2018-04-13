@@ -76,7 +76,7 @@ export class HomePage {
     const user = {
       uid: this.userId,
       location: 'France',
-      name: 'Oberthur Cash Protection',
+      name: 'COMPANy',
       roles: {
         admin:false,
         phone: false,
